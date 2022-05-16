@@ -1,12 +1,18 @@
 #!ipxe
 ###
-### netboot.xyz-custom menu
+### netboot.xyz-custom menu example
 ###
 
-:start
-echo Hello world!
-sleep 10
-goto custom_exit
+:custom
+clear custom_choice
+menu Custom ISO
+item option_opensuse_tw_arm64 ${space} OpenSUSE TW Arm64
+
+:option_opensuse_tw_arm64
+kernel https://boot.netboot.xyz/memdisk raw iso
+initrd http://download.opensuse.org/ports/aarch64/tumbleweed/iso/openSUSE-Tumbleweed-NET-aarch64-Current.iso
+boot || goto custom_exit
 
 :custom_exit
-exit 0
+chain utils.ipxe
+exit
